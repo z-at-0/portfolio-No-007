@@ -1,59 +1,113 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# portfolio-No-007: Laravel GitHub API App (Cache & MVC Logic)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+## 概要
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+GitHub APIを利用して、ユーザー情報やリポジトリを検索・表示するLaravelアプリケーションです。  
+外部APIの利用制限に対し、サーバーサイドでキャッシュ機構を利用することで、リクエスト数を削減し実用性を高めた設計を重視しています。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 画面イメージ
 
-## Learning Laravel
+### 1. トップページ
+![検索画面イメージ](img/search.png)
+検索画面イメージ シンプルな検索画面デザイン。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 2. APIレート制限の可視化及び検索結果・リポジトリ一覧
+![検索結果イメージ](img/results.png)
+![検索結果イメージ](img/results2.png)
+![検索結果イメージ](img/results3.png)
+検索結果イメージ 現在のAPI残り回数と、キャッシュ機能が有効であることをユーザーに提示。  
+スター順のソート、キャッシュされたコミット履歴、スマートなページネーション。  
+検索結果に対して「次へ」や「前へ」のUIも考慮。
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. サーバーサイド・キャッシュ管理
+キャッシュ構造イメージ Laravel Cacheを利用し、APIレスポンスを一定時間保持する設計。
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 主な機能
 
-### Premium Partners
+GitHubユーザー検索: アカウント情報、アイコン、自己紹介（Bio）の取得  
+リポジトリ管理: PHPのusortによるスター数順のソート、ページネーション表示  
+詳細プレビュー: 各リポジトリの最新3件のコミット履歴をキャッシュ連携で高速取得  
+自作キャッシュ機構: Laravel Cacheを利用し、APIレスポンスを10分間保持  
+API制限対策: キャッシュにより不要なAPI呼び出しを削減  
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 使用技術
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+使用言語: PHP (8.2), Laravel 12, HTML, CSS  
+技術要素:  
+Laravel HTTP Client (Http Facade)  
+Laravel Cache  
+Bladeテンプレート  
+GitHub REST API  
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 設計方針
 
-## Security Vulnerabilities
+単にAPIを叩くだけでなく、「限られたリソース（API制限）をいかにバックエンドの工夫で守るか」という実務的な課題解決を意識して設計しました。  
+Laravelのキャッシュ機能を活用し、外部APIへの依存を最小化する構成としています。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 動作環境
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+本アプリケーションはPHPおよびLaravelを使用しているため、ローカル開発環境（XAMPP / Laravel環境）で動作します。
+
+---
+
+## セットアップ方法
+
+リポジトリをクローン  
+git clone https://github.com/z-at-0/portfolio-no-007.git  
+
+依存関係インストール  
+composer install  
+
+環境設定  
+cp .env.example .env  
+php artisan key:generate  
+
+サーバー起動  
+php artisan serve  
+
+http://127.0.0.1:8000/github  
+
+---
+
+## ディレクトリ構成
+```text
+portfolio-No-007  
+├ app/Http/Controllers/GitHubController.php  
+├ resources/views/github.blade.php  
+├ routes/web.php  
+└ .env  
+```
+---
+
+## 学習・AI活用について
+
+本プロジェクトでは、実装理解およびデバッグ補助の目的でAIツール(ChatGPT)を活用しています。
+
+■ 活用範囲  
+Laravel MVC構造の理解  
+キャッシュ設計の検討  
+GitHub APIレスポンス構造の解析  
+Controller設計の改善支援  
+
+■ 主体性について  
+コードはすべて一行ずつ内容を確認して構築しています。  
+キャッシュキー設計やAPI取得構造は、自身で調整・改善を行っています。
+
+■ 補足  
+006（PHP単体構成）と比較し、本プロジェクトではLaravelを用いたMVC構造への移行とキャッシュ機構の標準化を行っています。
+
+---
+
+© 2026 Y.K

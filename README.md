@@ -9,6 +9,12 @@ GitHub APIを利用して、ユーザー情報やリポジトリを検索・表�
 
 ---
 
+## デモ動画
+
+https://github.com/z-at-0/portfolio-No-007/issues/1
+
+---
+
 ## 画面イメージ
 
 ### 1. トップページ
